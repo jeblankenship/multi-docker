@@ -1,0 +1,24 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t docscode/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run docscode/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t docscode/multi-client ./client
+  - docker build -t docscode/multi-nginx ./nginx
+  - docker build -t docscode/multi-server ./server
+  - docker build -t docscode/multi-worker ./worker
+  # log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # push images to docker hub
+  - docker push docscode/multi-client
+  - docker push docscode/multi-nginx
+  - docker push docscode/multi-server
+  - docker push docscode/multi-worker
+  
+

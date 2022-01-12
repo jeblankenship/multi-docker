@@ -16,8 +16,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Client Docker image
-      run: docker build . --file client/Dockerfile --tag docscode/Client:$(date +%s)
+      run: docker build . --file client/Dockerfile --tag $(date +%s)
     - name: Build the nginx Docker image
-      run: docker build . --file nginx/Dockerfile --tag docscode/nginx:$(date +%s)
+      run: docker build . --file nginx/Dockerfile --tag $(date +%s)
     - name: Build the worker Docker image
-      run: docker build . --file worker/Dockerfile --tag docscode/Worker:$(date +%s)
+      run: docker build . --file worker/Dockerfile --tag $(date +%s)

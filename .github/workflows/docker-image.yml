@@ -24,3 +24,6 @@ jobs:
     - name: Build the worker Docker image
       run: docker build . --file Dockerfile --tag $(date +%s)
       working-directory: worker
+    - name: Build the server Docker image
+      run: docker build . --file Dockerfile --tag $(date +%s)
+      working-directory: server

@@ -1,0 +1,29 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:    
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Client Docker image
+      run: docker build . --file Dockerfile --tag $(date +%s)
+      working-directory: client
+    - name: Build the nginx Docker image
+      run: docker build . --file Dockerfile --tag $(date +%s)
+      working-directory: nginx
+    - name: Build the worker Docker image
+      run: docker build . --file Dockerfile --tag $(date +%s)
+      working-directory: worker
+    - name: Build the server Docker image
+      run: docker build . --file Dockerfile --tag $(date +%s)
+      working-directory: server
